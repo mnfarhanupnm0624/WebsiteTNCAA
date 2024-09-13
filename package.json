@@ -1,0 +1,39 @@
+{
+  "name": "ProgressiveWordPress",
+  "version": "0.0.3411",
+  "description": "A Sample WordPress-based Progressive Web App.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm version --no-git-tag-version -f patch && mkdir -p dist; node build.js",
+    "copy-static": "cp -r src/*.php dist/",
+    "minify-css": "for file in src/*.css; do csso src/*.css dist/ -m file",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src/**/*",
+        "build.js"
+      ],
+      "extensions": "php,json,js,html,css"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleChrome/ProgressiveWordPress"
+  },
+  "keywords": [],
+  "author": "Surma <surma@surma.link>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@webcomponents/custom-elements": "^1.0.0",
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
+    "babili": "^0.1.4",
+    "cssnano": "^3.10.0",
+    "glob": "^7.1.2",
+    "mz": "^2.6.0",
+    "npm-watch": "^0.2.0",
+    "systemjs": "^0.20.15"
+  }
+}

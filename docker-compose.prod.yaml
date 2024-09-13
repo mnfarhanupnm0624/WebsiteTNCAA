@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  mysql:
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
+  pwp:
+    build: .
+    image: "surma/progressivewordpress"
+    environment:
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./tmp/uploads:/var/www/html/wp-content/uploads
+  caddy:
+    build: ./caddy
+    volumes:
+      - ./caddy/Caddyfile-prod:/etc/Caddyfile
+      - ./tmp/caddy:/root/.caddy
+    ports:
+      - 80:80
+      - 443:443

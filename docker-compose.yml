@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  mysql:
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
+  pwp:
+    build: .
+    image: "surma/progressivewordpress"
+    environment:
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./dist/theme:/var/www/html/wp-content/themes/surmblog_dev
+      - ./dist/pwp-lazy-image-plugin:/var/www/html/wp-content/plugins/pwp-lazy-image-plugin
+      - ./tmp/uploads:/var/www/html/wp-content/uploads
+  caddy:
+    build: ./caddy
+    volumes:
+      - ./caddy/Caddyfile-dev:/etc/Caddyfile
+      - ./tmp/caddy:/root/.caddy
+    ports:
+      - 127.0.0.1:8080:8080
+      - 127.0.0.1:8443:8443
